@@ -22,7 +22,7 @@ export default function HomePage() {
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-600 mb-12 leading-relaxed font-light max-w-2xl mx-auto">
-              پلتفرم پیشرفته مدیریت هویت دیجیتال برای متخصصان
+              پلتفرم پیشرفته مدیریت هویت دیجیتال و سرگرمی‌های هوشمند
             </p>
             
             {/* CTA Buttons */}
@@ -34,6 +34,16 @@ export default function HomePage() {
                 <span className="flex items-center gap-2">
                   شروع کنید
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </span>
+              </Link>
+              
+              <Link 
+                href="/games/crossword"
+                className="group bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl shadow-green-500/25 hover:shadow-green-500/40 transform hover:-translate-y-0.5"
+              >
+                <span className="flex items-center gap-2">
+                  🧩 بازی کراسورد
+                  <span className="group-hover:translate-x-1 transition-transform">🎮</span>
                 </span>
               </Link>
               
@@ -60,6 +70,10 @@ export default function HomePage() {
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                بازی‌های هوشمند
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
                 پشتیبانی ۲۴/۷
               </div>
             </div>
@@ -75,7 +89,7 @@ export default function HomePage() {
               امکانات پیشرفته
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              تمام ابزارهای مورد نیاز برای مدیریت حرفه‌ای هویت دیجیتال
+              تمام ابزارهای مورد نیاز برای مدیریت حرفه‌ای هویت دیجیتال و سرگرمی
             </p>
           </div>
 
@@ -88,15 +102,15 @@ export default function HomePage() {
                 color: "emerald"
               },
               {
-                icon: "⚡", 
-                title: "عملکرد بالا",
-                description: "بارگذاری آنی و تجربه کاربری بی‌نظیر",
-                color: "blue"
+                icon: "🧩", 
+                title: "بازی‌های هوشمند",
+                description: "مجموعه بازی‌های فکری و چالش‌برانگیز",
+                color: "green"
               },
               {
                 icon: "🎯",
                 title: "تحلیل پیشرفته",
-                description: "گزارش‌های دقیق از فعالیت‌های کاربران",
+                description: "گزارش‌های دقیق از فعالیت‌ها و عملکرد",
                 color: "purple"
               }
             ].map((feature, index) => (
@@ -115,12 +129,109 @@ export default function HomePage() {
                   <p className="text-slate-600 leading-relaxed">
                     {feature.description}
                   </p>
+
+                  {/* دکمه بیشتر برای بازی‌ها */}
+                  {feature.icon === "🧩" && (
+                    <Link 
+                      href="/games/crossword"
+                      className="inline-block mt-4 text-green-600 hover:text-green-700 font-medium text-sm"
+                    >
+                      مشاهده بازی‌ها →
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}
           </div>
+
+          {/* بخش بازی‌ها */}
+          <div className="mt-20 text-center">
+            <h3 className="text-2xl font-bold text-slate-900 mb-8">بازی‌های در دسترس</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <GameCard 
+                title="کراسورد"
+                description="چالش روزانه کلمات و معماها"
+                icon="🧩"
+                href="/games/crossword"
+                color="blue"
+                status="فعال"
+              />
+              <GameCard 
+                title="چلنج"
+                description="مسابقات فصلی و چالش‌های ویژه"
+                icon="🎯"
+                href="#"
+                color="purple"
+                status="به زودی"
+                disabled
+              />
+              <GameCard 
+                title="مموری کارت"
+                description="تمرین حافظه با کارت‌های هوشمند"
+                icon="🃏"
+                href="#"
+                color="green"
+                status="به زودی"
+                disabled
+              />
+            </div>
+          </div>
         </div>
       </section>
     </div>
+  )
+}
+
+// کامپوننت کارت بازی
+function GameCard({ title, description, icon, href, color, status, disabled = false }) {
+  const colorClasses = {
+    blue: 'from-blue-500 to-blue-600',
+    purple: 'from-purple-500 to-purple-600',
+    green: 'from-green-500 to-green-600'
+  }
+
+  const statusColors = {
+    فعال: 'bg-green-100 text-green-800',
+    'به زودی': 'bg-yellow-100 text-yellow-800'
+  }
+
+  const CardContent = () => (
+    <div className={`relative group p-6 rounded-2xl border-2 border-slate-200 bg-white hover:shadow-lg transition-all duration-300 ${
+      disabled ? 'opacity-60' : 'hover:border-slate-300'
+    }`}>
+      {/* وضعیت */}
+      <div className={`absolute -top-2 right-4 px-3 py-1 rounded-full text-xs font-medium ${statusColors[status]}`}>
+        {status}
+      </div>
+
+      {/* آیکون */}
+      <div className={`w-16 h-16 bg-gradient-to-br ${colorClasses[color]} rounded-2xl flex items-center justify-center shadow-lg mb-4 mx-auto`}>
+        <span className="text-2xl text-white">{icon}</span>
+      </div>
+
+      {/* محتوا */}
+      <h4 className="text-lg font-semibold text-slate-900 text-center mb-2">{title}</h4>
+      <p className="text-slate-600 text-sm text-center leading-relaxed">{description}</p>
+
+      {/* دکمه */}
+      {!disabled && (
+        <div className="mt-4 text-center">
+          <span className="inline-flex items-center gap-1 text-blue-600 font-medium text-sm">
+            شروع بازی
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </span>
+        </div>
+      )}
+    </div>
+  )
+
+  if (disabled) {
+    return <CardContent />
+  }
+
+  return (
+    <Link href={href}>
+      <CardContent />
+    </Link>
   )
 }
